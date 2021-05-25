@@ -10,12 +10,13 @@ function App() {
   const socketRef = useRef();
 
   useEffect(() => {
-    socketRef.current = io.connect('http://localhost:8000');
+    console.log('rerender');
+    socketRef.current = io.connect('http://localhost:8000/');
     socketRef.current.on('message', ({ name, message }) => {
-      setChat([...chat, { name, message }]);
+      setChat((oldVal) => [...oldVal, { name, message }]);
     });
     return () => socketRef.current.disconnect();
-  }, [chat]);
+  }, []);
 
   const onTextChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
